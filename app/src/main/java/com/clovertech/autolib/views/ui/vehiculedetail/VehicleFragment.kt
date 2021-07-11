@@ -26,6 +26,7 @@ class VehicleFragment : Fragment(),OnMapReadyCallback {
     private val viewModel: VehicleViewModel by activityViewModels()
     private var vehicleMap: GoogleMap? = null
     private lateinit var mapView: MapView
+    private var vehicle: Vehicle? =  null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
@@ -42,31 +43,31 @@ class VehicleFragment : Fragment(),OnMapReadyCallback {
 
         mapView = binding.vehicleMap
         mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
 
         viewModel.getVehicleById(idVehicle)
-        if(viewModel.vehicleResponse != null) {
-            if (viewModel.vehicleResponse?.isSuccessful!!) {
-                val vehicle = viewModel.vehicleResponse?.body()!!
-                Toast.makeText(requireContext(), vehicle.vehiclebrand, LENGTH_SHORT).show()
-                binding.carModelName.text = vehicle.vehiclemodel
-                binding.carChasisNumber.text = vehicle.chassisNumber
-                binding.carName.text = vehicle.vehiclebrand
+        viewModel.vehicleResponse.observe(viewLifecycleOwner,{
+            if (it?.isSuccessful!!) {
+                vehicle = it.body()!!
+                binding.carModelName.text = vehicle?.vehiclemodel
+                binding.carChasisNumber.text = vehicle?.chassisNumber
+                binding.carName.text = vehicle?.vehiclebrand
 
-                val lating = LatLng(vehicle.latitude
-                    ,vehicle.longitude)
-
-                vehicleMap?.addMarker(MarkerOptions()
-                    .position(lating)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)))
+                mapView.getMapAsync(this)
             }
-        }
+        })
 
     }
 
     override fun onMapReady(gmap: GoogleMap) {
         vehicleMap = gmap
         gmap.isMyLocationEnabled = true
+
+        val lating = LatLng(vehicle?.latitude!!
+            ,vehicle?.longitude!!)
+
+        vehicleMap?.addMarker(MarkerOptions()
+            .position(lating)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)))
     }
 
     override fun onPause() {

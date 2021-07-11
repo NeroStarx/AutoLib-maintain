@@ -11,12 +11,12 @@ import retrofit2.Response
 
 class VehicleViewModel: ViewModel() {
 
-    var vehicleResponse: Response<Vehicle>? = null
+    var vehicleResponse: MutableLiveData<Response<Vehicle>> = MutableLiveData()
 
     fun getVehicleById(idVehicle: Int) {
         viewModelScope.launch{
             val response = VehicleApiClient.vehicleService.getVehicle(idVehicle)
-            vehicleResponse = response
+            vehicleResponse.value = response
         }
     }
 

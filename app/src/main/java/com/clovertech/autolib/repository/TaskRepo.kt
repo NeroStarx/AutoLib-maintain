@@ -80,15 +80,13 @@ object TaskRepo {
                 DialogUtils.with(context)
                     .showDialog(context.getString(R.string.closeDialogTitle),
                         context.getString(R.string.closeMessagePre) + task.taskTitle,
-                        { _: DialogInterface, _: Int -> CoroutineScope(Dispatchers.IO).launch {
+                        { _: DialogInterface, _: Int ->
+                            CoroutineScope(Dispatchers.IO).launch {
 
                             val response = TaskApiClient.TASK_API_SERVICE.updateTaskState(
                                     task.uuid, TaskState(3))
-
-                            if (response.isSuccessful) {
-                                task.idTaskState = 3
-                                task.endDate = Calendar.getInstance().time
-                            }
+                            task.idTaskState = 3
+                            task.endDate = Calendar.getInstance().time
                             appDb!!.taskDao().updateTask(task)
                         }
                     }, null
@@ -102,9 +100,7 @@ object TaskRepo {
                                 task.uuid,
                                 TaskState(2)
                             )
-                        if (response.isSuccessful) {
-                            task.idTaskState = 2
-                        }
+                        task.idTaskState = 2
                         appDb!!.taskDao().updateTask(task)
                     }
                 else {

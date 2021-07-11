@@ -37,7 +37,6 @@ class TaskStepsAdapter(val viewModel: TaskViewModel) :
     }
 
     fun setListSteps(list: List<Step>) {
-
         data = list
         notifyDataSetChanged()
     }

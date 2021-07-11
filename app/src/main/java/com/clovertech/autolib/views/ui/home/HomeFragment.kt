@@ -72,8 +72,10 @@ class HomeFragment : Fragment() {
         tasksPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                taskViewModel.task = adapter.data[position]
-                adapterSteps.setListSteps(adapter.data[position].steps!!)
+                if(adapter.data.isNotEmpty()){
+                    taskViewModel.task = adapter.data[position]
+                    adapterSteps.setListSteps(adapter.data[position].steps!!)
+                }
             }
         })
 
@@ -89,6 +91,7 @@ class HomeFragment : Fragment() {
             taskViewModel.getAllTasks(requireContext())?.observe(viewLifecycleOwner,{
                 val listFiltered = it.filter { task -> ((task.idTaskState == 1) || (task.idTaskState == 2)) }
                 adapter.setTaskList(listFiltered)
+                adapter.notifyDataSetChanged()
                 binding.tasksNumber.text = listFiltered.size.toString()
                 tasksPager.requestTransform()
             })

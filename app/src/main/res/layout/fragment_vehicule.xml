@@ -32,38 +32,45 @@
 
     <TextView
         android:id="@+id/car_model_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Brand: Volswagen"
+        android:textAlignment="textStart"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/divider4"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/divider4"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
     <TextView
         android:id="@+id/car_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Model: POLO X23452"
+        android:textAlignment="textStart"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/car_model_name"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/divider4"
         app:layout_constraintTop_toBottomOf="@+id/car_model_name" />
 
     <TextView
         android:id="@+id/car_chasis_number"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Chassis number: 2434728937"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/car_name"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/divider4"
         app:layout_constraintTop_toBottomOf="@+id/car_name" />
 
